@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<div class="container">
+  <div class="text-center">
+    <h1>Welcome {{request.user}}</h1>
+  </div>
+</div>
+<div class="container">
+  <div>
+    <h3>Organisation</h3>
+  </div>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Organisation</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Conatact Us</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for orgs in user_org %}
+      <tr>
+        <td>
+          <div class="d-flex align-items-center">
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{orgs.name }}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{orgs.address_line_1}}</p>
+          <p class="text-muted mb-0">{{ orgs.address_line_2 }}</p>
+        </td>
+        <td>
+          {% if orgs.status == "A" %}
+            <span class="badge badge-success rounded-pill d-inline">Active</span>
+          {% else %}
+            <span class="badge badge-danger rounded-pill d-inline">Deactive</span>
+          {% endif %}
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{orgs.conatact_no}}</p>
+        </td>
+        <td>
+          {% if request.user.is_superuser %}
+          <a href="{% url 'org:organisation_branch' orgs.pk %}" type="button" class="btn btn-link btn-sm btn-rounded">
+          {% else %}
+          <a href="{% url 'org:organisation_branch' orgs.pk %}" type="button" class="btn btn-link btn-sm btn-rounded disabled">
+          {% endif %}
+            Branch
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex flex-row-reverse bd-highlight">
+    {% if request.user.is_superuser %}
+    <div class="p-2 bd-highlight d-flex justify-content-evenly"><a href="{% url 'org:customers_list' %}" type="button" class="btn btn-primary">See All Users</a></div>
+    {% else %}
+    <div class="p-2 bd-highlight d-flex justify-content-evenly disabled"><a href="{% url 'org:customers_list' %}" type="button" class="btn btn-primary disabled">See All Users</a></div>
+    {% endif %}
+    
+  </div>
+</div>
+{% endblock body %}

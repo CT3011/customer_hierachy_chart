@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<div class="container">
+  <div class="text-center">
+    <h1>{{request.user}}</h1>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Organisation</th>
+      <th scope="col">status</th>     
+    </tr>
+  </thead>
+  {% for customer in customer_list %}
+  <tbody>
+    <tr>
+      <th scope="row">{{customer.pk}}</th>
+      <td>{{customer.customer}}</td>
+      <td>{{customer.organisation}}</td>
+      <td>
+        {% if customer.status == 'A' %}
+        Active
+        {% else %}
+        Deactive
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock body %}

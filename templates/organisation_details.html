@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<div class="container">
+  <div class="text-center">
+    <h1>{{request.user}}</h1>
+  </div>
+</div>
+<div class="container">
+  <div>
+    <h3>Customers</h3>
+  </div>
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Eamil</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in org_users %}
+      <tr>
+        <th scope="row">{{customer.pk}}</th>
+        <td>
+          <div class="d-flex align-items-center">
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{customer.first_name}}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{customer.last_name}}</p>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{customer.email}}</p>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}
